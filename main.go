@@ -16,13 +16,12 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Con
 }
 
 func Hello(c echo.Context) error {
-	return c.Render(http.StatusOK, "content", "world")
+	return c.Render(http.StatusOK, "layout.html", "echo server")
 }
 
 func main() {
 	t := &Template{
 		templates: template.Must(template.ParseFiles("templates/layout.html", "templates/hello.html")),
-		//templates: template.Must(template.ParseGlob("public/views/*.html")),
 	}
 	e := echo.New()
 	e.Renderer = t
