@@ -10,7 +10,7 @@ type enemy struct {
 	D    int
 }
 
-type enemy struct {
+type ally struct {
 	Name string
 	HP   int
 	A    int
@@ -25,5 +25,6 @@ type equip struct {
 }
 
 func main() {
+
 	fmt.Println("vim-go")
 }
