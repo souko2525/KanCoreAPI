@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/labstack/echo"
+	"github.com/souko2525/KanCoreAPI/database"
 	"html/template"
 	"io"
 	"net/http"
