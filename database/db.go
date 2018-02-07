@@ -1,18 +1,18 @@
 package database
 
 import (
-	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
-var cptr *gorm.DB
+//var cptr *gorm.DB
 
-func Connect() error {
-	if cptr != nil {
-		return nil
-	}
-
+func Connect() *gorm.DB {
+	/*
+		if cptr != nil {
+			return nil
+		}
+	*/
 	DBMS := "mysql"
 	USER := "api"
 	PASS := ""
@@ -23,9 +23,10 @@ func Connect() error {
 	db, err := gorm.Open(DBMS, CONNECT)
 
 	if err != nil {
-		return err
+		panic(err.Error())
 	}
-	cptr = db
+	//cptr = db
+	return db
 }
 
 /*
