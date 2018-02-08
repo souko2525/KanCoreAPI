@@ -1,7 +1,15 @@
-package calc
+package models
 
-import "fmt"
+import "github.com/jinzhu/gorm"
 
+type User struct {
+	gorm.Model
+	Name     string `gorm:"size:255"`
+	Password string `gorm:"size:255"`
+	Email    string `gorm:"size:255"`
+}
+
+/*
 type enemy struct {
 	Name string
 	HP   int
@@ -24,7 +32,9 @@ type equip struct {
 	D int
 }
 
-func main() {
-
-	fmt.Println("vim-go")
+type enemy struct {
+    Id   int    `json:id`
+    Name string `json:name`
 }
+
+*/

@@ -6,27 +6,29 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
-type enemy struct {
-	Id   int    `json:id`
-	Name string `json:name`
-}
+var cptr *gorm.DB
 
-func gormConnect() *gorm.DB {
+func Connect() error {
+	if cptr != nil {
+		return nil
+	}
+
 	DBMS := "mysql"
-	USER := "kancore"
+	USER := "api"
 	PASS := ""
 	PROTOCOL := "tcp(127.0.0.1:3306)"
-	DBNAME := "KanCore"
+	DBNAME := "kancole"
 
 	CONNECT := USER + ":" + PASS + "@" + PROTOCOL + "/" + DBNAME
 	db, err := gorm.Open(DBMS, CONNECT)
 
 	if err != nil {
-		panic(err.Error())
+		return err
 	}
-	return db
+	cptr = db
 }
 
+/*
 func main() {
 	db := gormConnect()
 	enemyEx := enemy{}
@@ -34,3 +36,4 @@ func main() {
 	db.First(&enemyEx)
 	fmt.Println(enemyEx.Name)
 }
+*/
