@@ -18,6 +18,8 @@ func (User) ReflectType() reflect.Type {
 	return reflect.TypeOf(*t)
 }
 
+type Users []User
+
 func (Users) TableName() string  { return "user" }
 func (Users) PrimaryKey() string { return "id" }
 func (Users) ReflectType() reflect.Type {

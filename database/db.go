@@ -5,14 +5,12 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
-//var cptr *gorm.DB
+var cptr *gorm.DB
 
-func Connect() *gorm.DB {
-	/*
-		if cptr != nil {
-			return nil
-		}
-	*/
+func Connect() error {
+	if cptr != nil {
+		return nil
+	}
 	DBMS := "mysql"
 	USER := "api"
 	PASS := ""
@@ -23,10 +21,23 @@ func Connect() *gorm.DB {
 	db, err := gorm.Open(DBMS, CONNECT)
 
 	if err != nil {
-		panic(err.Error())
+		return err
 	}
-	//cptr = db
-	return db
+	cptr = db
+	return nil
+}
+
+func Close() error {
+	if cptr == nil {
+		return nil
+	}
+	return cptr.Close()
+}
+
+func GetSession() *gorm.DB {
+	if cptr == nil {
+
+	}
 }
 
 /*
