@@ -9,6 +9,7 @@ func Router(e *echo.Echo) {
 	v1 := e.Group("api/V1")
 	{
 		v1.GET("/hello", api.Hello())
+		v1.GET("/user/:id/", api.GetUser())
 	}
 
 }

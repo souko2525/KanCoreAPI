@@ -19,11 +19,13 @@ func Connect() error {
 
 	CONNECT := USER + ":" + PASS + "@" + PROTOCOL + "/" + DBNAME
 	db, err := gorm.Open(DBMS, CONNECT)
-
 	if err != nil {
 		return err
 	}
+
+	db.SingularTable(true)
 	cptr = db
+
 	return nil
 }
 
@@ -36,8 +38,11 @@ func Close() error {
 
 func GetSession() *gorm.DB {
 	if cptr == nil {
-
+		if e := Connect(); e != nil {
+			return nil
+		}
 	}
+	return cptr
 }
 
 /*
