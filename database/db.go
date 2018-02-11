@@ -2,11 +2,13 @@ package database
 
 import (
 	"github.com/jinzhu/gorm"
+	// mysql driver
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
 var cptr *gorm.DB
 
+//Connect return db connect handler
 func Connect() error {
 	if cptr != nil {
 		return nil
@@ -29,6 +31,7 @@ func Connect() error {
 	return nil
 }
 
+//Close is DB Close
 func Close() error {
 	if cptr == nil {
 		return nil
@@ -36,6 +39,7 @@ func Close() error {
 	return cptr.Close()
 }
 
+//GetSession start db
 func GetSession() *gorm.DB {
 	if cptr == nil {
 		if e := Connect(); e != nil {

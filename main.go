@@ -20,6 +20,6 @@ func main() {
 	e.Use(middleware.Recover())
 	e.Use(middleware.CORS())
 	router.Router(e)
-	e.Start(":3000")
+	e.Logger.Fatal(e.Start("127.0.0.1:3000"))
 
 }
