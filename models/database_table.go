@@ -2,12 +2,12 @@ package models
 
 import (
 	//"fmt"
-	"reflect"
-	//"strconv"
-	//"strings"
 	"github.com/jinzhu/gorm"
 	"github.com/labstack/echo"
 	db "github.com/souko2525/KanCoreAPI/database"
+	"reflect"
+	"strconv"
+	//"strings"
 )
 
 type DatabaseTable interface {
@@ -31,11 +31,33 @@ func colums(t DatabaseTable) []string {
 	return cols
 }
 
-func Select(t DatabaseTable, id int64, cont echo.Context) error {
-	//cols := "`" + strings.Join(colums(t), "`, `") + "`"
+func Select(t DatabaseTable, cond map[string]interface{}, cont echo.Context) error {
 	s := db.GetSession()
-	//result := s.First(t, id)
-	result := s.Table(t.TableName()).Select(colums(t)).First(t, id)
+	stmt := s.Table(t.TableName()).Select(colums(t)).Where(cond)
+	if cont.QueryParam("offset") != "" {
+		if v, e := strconv.ParseUint(cont.QueryParam("offset"), 10, 64); e != nil {
+			return e
+		} else {
+			stmt.Offset(v)
+		}
+
+	}
+
+	if cont.QueryParam("limit") != "" {
+		if v, e := strconv.ParseUint(cont.QueryParam("limit"), 10, 64); e != nil {
+			return e
+		} else {
+			stmt.Limit(v)
+		}
+
+	}
+
+	if cont.QueryParam("order_by") != "" {
+		stmt.Order(cont.QueryParam("order_by"))
+	}
+
+	result := stmt.Find(t)
+
 	if err := result.Error; err != nil {
 		return err
 	} else if result.RecordNotFound() {
