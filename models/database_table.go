@@ -10,6 +10,7 @@ import (
 	//"strings"
 )
 
+//DatabaseTable shold has TableName, PrimaryKey, ReflectType
 type DatabaseTable interface {
 	TableName() string
 	PrimaryKey() string
@@ -31,25 +32,24 @@ func colums(t DatabaseTable) []string {
 	return cols
 }
 
+//Select return struct t
 func Select(t DatabaseTable, cond map[string]interface{}, cont echo.Context) error {
 	s := db.GetSession()
 	stmt := s.Table(t.TableName()).Select(colums(t)).Where(cond)
 	if cont.QueryParam("offset") != "" {
-		if v, e := strconv.ParseUint(cont.QueryParam("offset"), 10, 64); e != nil {
+		v, e := strconv.ParseUint(cont.QueryParam("offset"), 10, 64)
+		if e != nil {
 			return e
-		} else {
-			stmt.Offset(v)
 		}
-
+		stmt.Offset(v)
 	}
 
 	if cont.QueryParam("limit") != "" {
-		if v, e := strconv.ParseUint(cont.QueryParam("limit"), 10, 64); e != nil {
+		v, e := strconv.ParseUint(cont.QueryParam("limit"), 10, 64)
+		if e != nil {
 			return e
-		} else {
-			stmt.Limit(v)
 		}
-
+		stmt.Limit(v)
 	}
 
 	if cont.QueryParam("order_by") != "" {

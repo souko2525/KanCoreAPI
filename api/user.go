@@ -8,6 +8,7 @@ import (
 	"strconv"
 )
 
+//GetUsers return echo.HandlerFunc
 func GetUsers() echo.HandlerFunc {
 	return func(c echo.Context) (err error) {
 		users := new(models.Users)
@@ -31,6 +32,7 @@ func GetUsers() echo.HandlerFunc {
 	}
 }
 
+//GetUser return echo.HandlerFun
 func GetUser() echo.HandlerFunc {
 	return func(c echo.Context) (err error) {
 		user := new(models.User)
