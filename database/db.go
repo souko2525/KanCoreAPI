@@ -1,7 +1,6 @@
 package database
 
 import (
-	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
@@ -12,7 +11,6 @@ func Connect() error {
 	if cptr != nil {
 		return nil
 	}
-
 	DBMS := "mysql"
 	USER := "api"
 	PASS := ""
@@ -21,11 +19,30 @@ func Connect() error {
 
 	CONNECT := USER + ":" + PASS + "@" + PROTOCOL + "/" + DBNAME
 	db, err := gorm.Open(DBMS, CONNECT)
-
 	if err != nil {
 		return err
 	}
+
+	db.SingularTable(true)
 	cptr = db
+
+	return nil
+}
+
+func Close() error {
+	if cptr == nil {
+		return nil
+	}
+	return cptr.Close()
+}
+
+func GetSession() *gorm.DB {
+	if cptr == nil {
+		if e := Connect(); e != nil {
+			return nil
+		}
+	}
+	return cptr
 }
 
 /*
