@@ -5,6 +5,7 @@ import (
 	"github.com/souko2525/KanCoreAPI/api"
 )
 
+//Router define path to func
 func Router(e *echo.Echo) {
 	v1 := e.Group("api/V1")
 	{
