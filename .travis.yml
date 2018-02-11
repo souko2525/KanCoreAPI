@@ -1,0 +1,10 @@
+# .travis.yml
+install:
+  - go get github.com/haya14busa/goverage
+
+script:
+  - goverage -coverprofile=coverage.txt ./...
+
+after_success:
+  - goveralls -service=travis-ci -coverprofile=coverage.txt
+  - bash <(curl -s https://codecov.io/bash)
