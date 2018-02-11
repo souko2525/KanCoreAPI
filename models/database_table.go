@@ -5,7 +5,7 @@ import (
 	"reflect"
 	//"strconv"
 	//"strings"
-	//"github.com/jinzhu/gorm"
+	"github.com/jinzhu/gorm"
 	"github.com/labstack/echo"
 	db "github.com/souko2525/KanCoreAPI/database"
 )
@@ -31,11 +31,16 @@ func colums(t DatabaseTable) []string {
 	return cols
 }
 
-func Select(t DatabaseTable, cont echo.Context) error {
+func Select(t DatabaseTable, id int64, cont echo.Context) error {
 	//cols := "`" + strings.Join(colums(t), "`, `") + "`"
 	s := db.GetSession()
-	s.First(&t)
+	//result := s.First(t, id)
+	result := s.Table(t.TableName()).Select(colums(t)).First(t, id)
+	if err := result.Error; err != nil {
+		return err
+	} else if result.RecordNotFound() {
+		return gorm.ErrRecordNotFound
+	}
 
 	return nil
-
 }

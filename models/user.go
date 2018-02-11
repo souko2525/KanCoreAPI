@@ -5,10 +5,10 @@ import (
 )
 
 type User struct {
-	Id       int64  `db:"id" json:"id"`
-	Name     string `sql:"size:60" db:"name" json:"name"`
-	Password string `sql:"size:60" db:"password" json:"password"`
-	Hobby    string `sql:"size:60" db:"hobby" json:"hobby"`
+	Id       int64  `json:"id" gorm:"primary_key"`
+	Name     string `json:"name"`
+	Password string `json:"password"`
+	Hobby    string `json:"hobby"`
 }
 
 func (User) TableName() string  { return "user" }

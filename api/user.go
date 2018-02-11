@@ -5,14 +5,14 @@ import (
 	"github.com/labstack/echo"
 	"github.com/souko2525/KanCoreAPI/models"
 	"net/http"
-	//"strconv"
+	"strconv"
 )
 
 func GetUser() echo.HandlerFunc {
 	return func(c echo.Context) (err error) {
 		user := new(models.User)
-		//id, _ := strconv.ParseInt(c.Param(user.PrimaryKey()), 0, 64)
-		e := models.Select(user, c)
+		id, _ := strconv.ParseInt(c.Param(user.PrimaryKey()), 0, 64)
+		e := models.Select(user, id, c)
 		if e == gorm.ErrRecordNotFound {
 			return c.String(http.StatusNotFound, "")
 		} else if e != nil {
