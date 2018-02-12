@@ -1,11 +1,12 @@
 package api
 
 import (
+	"net/http"
+	"strconv"
+
 	"github.com/jinzhu/gorm"
 	"github.com/labstack/echo"
 	"github.com/souko2525/KanCoreAPI/models"
-	"net/http"
-	"strconv"
 )
 
 //GetUsers return echo.HandlerFunc

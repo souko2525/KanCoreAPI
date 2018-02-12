@@ -1,13 +1,19 @@
 # .travis.yml
 language: go
 go:
-  - 1.8.x
+  - 1.9
   - tip
 before_install:
   - go get -t -v ./...
-  - go get github.com/haya14busa/goverage
+  - go get -u github.com/haya14busa/goverage
+  - go get -u github.com/mattn/goveralls
+  - go get -u golang.org/x/tools/cmd/goimports
+  - go get -u github.com/golang/lint/golint
 
 script:
+  - go vet ./...
+  - diff <(goimports -d .) <(printf "")
+  - diff <(golint ./...) <(printf "")
   - goverage -coverprofile=coverage.txt ./...
 
 after_success:
