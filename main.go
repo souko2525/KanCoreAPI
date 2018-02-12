@@ -1,11 +1,12 @@
 package main
 
 import (
+	"os"
+
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	"github.com/souko2525/KanCoreAPI/database"
 	"github.com/souko2525/KanCoreAPI/router"
-	"os"
 	//"html/template"
 	//"io"
 	//"net/http"

@@ -2,11 +2,12 @@ package models
 
 import (
 	//"fmt"
+	"reflect"
+	"strconv"
+
 	"github.com/jinzhu/gorm"
 	"github.com/labstack/echo"
 	db "github.com/souko2525/KanCoreAPI/database"
-	"reflect"
-	"strconv"
 	//"strings"
 )
 
