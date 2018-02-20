@@ -49,3 +49,25 @@ func GetUser() echo.HandlerFunc {
 		return c.JSON(http.StatusOK, user)
 	}
 }
+
+//PostUser create user
+func PostUser() echo.HandlerFunc {
+	return func(c echo.Context) (err error) {
+		user := new(models.User)
+		if err := c.Bind(user); err != nil {
+			return err
+		}
+		/*
+			jd, e := models.ParseJSON(c)
+			if e != nil {
+				return c.String(http.StatusBadRequest, e.Error())
+			}
+			models.BindJSON(*user, jd)
+		*/
+		if e := models.Insert(user); e != nil {
+			return c.String(http.StatusInternalServerError, e.Error())
+		}
+		return c.JSON(http.StatusCreated, user)
+
+	}
+}

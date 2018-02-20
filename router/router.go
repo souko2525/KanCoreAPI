@@ -11,6 +11,7 @@ func Router(e *echo.Echo) {
 	{
 		v1.GET("/hello", api.Hello())
 		v1.GET("/user/", api.GetUsers())
+		v1.POST("/user/", api.PostUser())
 		v1.GET("/user/:id/", api.GetUser())
 	}
 
