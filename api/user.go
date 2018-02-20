@@ -1,12 +1,11 @@
 package api
 
 import (
-	"net/http"
-	"strconv"
-
 	"github.com/jinzhu/gorm"
 	"github.com/labstack/echo"
 	"github.com/souko2525/KanCoreAPI/models"
+	"net/http"
+	"strconv"
 )
 
 //GetUsers return echo.HandlerFunc
@@ -47,5 +46,27 @@ func GetUser() echo.HandlerFunc {
 			return c.String(http.StatusInternalServerError, e.Error())
 		}
 		return c.JSON(http.StatusOK, user)
+	}
+}
+
+//PostUser create user
+func PostUser() echo.HandlerFunc {
+	return func(c echo.Context) (err error) {
+		user := new(models.User)
+		if err := c.Bind(user); err != nil {
+			return err
+		}
+		/*
+			jd, e := models.ParseJSON(c)
+			if e != nil {
+				return c.String(http.StatusBadRequest, e.Error())
+			}
+			models.BindJSON(*user, jd)
+		*/
+		if e := models.Insert(user); e != nil {
+			return c.String(http.StatusInternalServerError, e.Error())
+		}
+		return c.JSON(http.StatusCreated, user)
+
 	}
 }

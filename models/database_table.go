@@ -67,3 +67,32 @@ func Select(t DatabaseTable, cond map[string]interface{}, cont echo.Context) err
 
 	return nil
 }
+
+//Insert user
+func Insert(t DatabaseTable) error {
+	/*
+		cs := make([]string, 0, len(d))
+		vs := make([]interface{}, 0, len(d))
+		for k, v := range d {
+			cs = append(cs, k)
+			vs = append(vs, v)
+		}
+	*/
+	s := db.GetSession()
+	tx := s.Begin()
+	defer func() {
+		if r := recover(); r != nil {
+			tx.Rollback()
+		}
+	}()
+
+	if tx.Error != nil {
+		return tx.Error
+	}
+
+	if err := tx.Table(t.TableName()).Create(t).Error; err != nil {
+		tx.Rollback()
+		return err
+	}
+	return tx.Commit().Error
+}
