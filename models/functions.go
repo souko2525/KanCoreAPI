@@ -2,9 +2,10 @@ package models
 
 import (
 	"encoding/json"
-	"github.com/labstack/echo"
 	"reflect"
 	"time"
+
+	"github.com/labstack/echo"
 )
 
 //ParseJSON return map
